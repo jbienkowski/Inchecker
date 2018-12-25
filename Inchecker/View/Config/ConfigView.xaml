@@ -1,0 +1,96 @@
+﻿<UserControl
+    x:Class="Inchecker.View.Config.ConfigView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Inchecker.View.Config"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid>
+        <TabControl>
+            <TabItem Header="General">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="5">
+                        <Label Content="Log retention (days)" />
+                        <TextBox Text="{Binding LogRetention, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+                        <Button
+                            Margin="5"
+                            Command="{Binding SaveGeneralSettingsCommand}"
+                            Content="Save" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="5" />
+
+                    <StackPanel Grid.Column="2" Margin="5" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Users">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid
+                        Grid.Column="0"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Persons}"
+                        SelectedItem="{Binding SelectedPerson}"
+                        SelectionMode="Single">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding FirstName}"
+                                Header="First name" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding LastName}"
+                                Header="Last name" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Role}"
+                                Header="Role" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Column="1" Margin="5">
+                        <Label Content="First name" />
+                        <TextBox IsEnabled="{Binding ControlsEnabled}" Text="{Binding SelectedPerson.FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+                        <Label Content="Last name" />
+                        <TextBox IsEnabled="{Binding ControlsEnabled}" Text="{Binding SelectedPerson.LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+                        <Label Content="Floor number" />
+                        <TextBox IsEnabled="{Binding ControlsEnabled}" Text="{Binding SelectedPerson.FloorNr, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+                        <Label Content="Room number" />
+                        <TextBox IsEnabled="{Binding ControlsEnabled}" Text="{Binding SelectedPerson.RoomNr, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+                        <Label Content="Pin" />
+                        <TextBox IsEnabled="{Binding ControlsEnabled}" Text="{Binding SelectedPerson.Pin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+                        <Button
+                            Margin="5"
+                            Command="{Binding AddPersonCommand}"
+                            Content="Add user" />
+                        <Button
+                            Margin="5"
+                            Command="{Binding RemovePersonCommand}"
+                            Content="Remove person" />
+                        <Button
+                            Margin="5"
+                            Command="{Binding CommitCommand}"
+                            Content="Commit" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
